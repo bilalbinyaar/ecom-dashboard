@@ -275,3 +275,8 @@ input[type='file'] {
   background-color: var(--secondary-color);
   color: var(--light-color);
 }
+
+.edit-del svg {
+  margin-left: 2rem;
+  cursor: pointer;
+}

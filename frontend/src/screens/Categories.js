@@ -60,8 +60,10 @@ const Categories = () => {
                     )} */}
 
                     <p>{category.name}</p>
-                    <AiFillEdit />
-                    <AiFillDelete />
+                    <div className="edit-del">
+                      <AiFillEdit />
+                      <AiFillDelete />
+                    </div>
                   </div>
                 ))}
               </div>
