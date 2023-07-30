@@ -4,8 +4,6 @@ import axios from 'axios';
 const CategoriesModal = ({ isOpen, onClose }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
 
-  if (!isOpen) return null;
-
   const handleSaveCategory = async () => {
     if (!newCategoryName.trim()) {
       alert('Please enter a valid category name.');
@@ -21,12 +19,13 @@ const CategoriesModal = ({ isOpen, onClose }) => {
     }
   };
 
+  if (!isOpen) return null;
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Add New Category</h2>
         <div className="inputs-for-modal">
-          {/* <input type="file" accept="image/*" onChange={handleImageChange} /> */}
           <input
             type="name"
             placeholder="Enter name of category"
