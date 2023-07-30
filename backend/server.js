@@ -1,4 +1,5 @@
 import categoryRoute from './routes/categoryRoute.js';
+import productRoute from './routes/productsRoute.js';
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -22,6 +23,7 @@ db.once('open', () => {
 
 //routes
 app.use('/api/categories', categoryRoute);
+app.use('/api/products', productRoute);
 
 // Define your Mongoose schema and model for "Categories" collection
 const categorySchema = new mongoose.Schema({
