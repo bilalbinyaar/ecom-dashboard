@@ -1,3 +1,4 @@
+import categoryRoute from './routes/categoryRoute.js';
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -18,6 +19,9 @@ db.on('error', (error) => {
 db.once('open', () => {
   console.log('Connected to MongoDB successfully');
 });
+
+//routes
+app.use('/api/categories', categoryRoute);
 
 // Define your Mongoose schema and model for "Categories" collection
 const categorySchema = new mongoose.Schema({

@@ -256,7 +256,11 @@ input[type='file'] {
 }
 
 .inputs-for-modal {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.inputs-for-modal input {
+  margin-bottom: 0.8rem;
 }
 
 .modal-buttons {
