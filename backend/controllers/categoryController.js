@@ -93,10 +93,22 @@ exports.singleCategory = async (req, res) => {
   }
 };
 
+
 exports.deleteCategoryController = async (req, res) => {
   try {
     const { id } = req.params;
+    const category = await CategoryModel.findById(id);
+
+    if (!category) {
+      return res.status(404).send({
+        success: false,
+        message: 'Category not found',
+      });
+    }
+
+    // Delete the category
     await CategoryModel.findByIdAndDelete(id);
+
     res.status(200).send({
       success: true,
       message: 'Category Deleted',
