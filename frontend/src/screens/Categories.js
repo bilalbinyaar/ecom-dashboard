@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import SideBar from '../components/SideBar';
 import CategoryModal from '../components/CategoryModal';
 import axios from 'axios';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+// import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 
 const Categories = () => {
   const [isModalOpen, setModalOpen] = useState(false);
