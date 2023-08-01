@@ -7,6 +7,25 @@ import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 const Categories = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const [name, setName] = useState("");
+
+  // TO POST CATEGORIES
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const {data} = await axios.post('http://localhost:5000/api/category/create-category', {name})
+      if(data?.success){
+        handleCloseModal();
+      }
+      else {
+        console.log(data?.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const handleOpenModal = () => {
     setModalOpen(true);
   };
@@ -15,20 +34,6 @@ const Categories = () => {
     setModalOpen(false);
   };
 
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
 
   return (
     <div className="main-content">
@@ -43,13 +48,13 @@ const Categories = () => {
             <div className="upper-content">
               <h4>These are the listed categories</h4>
               <button onClick={handleOpenModal}>Add New</button>
-              <CategoryModal isOpen={isModalOpen} onClose={handleCloseModal} />
+              <CategoryModal isOpen={isModalOpen} onClose={handleCloseModal} handleSubmit={handleSubmit} value={name} setValue={setName}/>
             </div>
             <div className="body-content">
-              <div className="cat-listings-main">
+              {/* <div className="cat-listings-main">
                 {categories.map((category) => (
                   <div className="cat-listings" key={category._id}>
-                    {/* {category.image && (
+                    {category.image && (
                       <img
                         src={`data:${
                           category.image.contentType
@@ -57,7 +62,7 @@ const Categories = () => {
                         alt={category.name}
                         style={{ maxWidth: '200px' }}
                       />
-                    )} */}
+                    )}
 
                     <p>{category.name}</p>
                     <div className="edit-del">
@@ -66,7 +71,7 @@ const Categories = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
