@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(
   {
@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     price: {
-      type: Number,
+      type: String,
       required: true,
     },
     category: {
@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
       ref: 'Category',
       required: true,
     },
-    quantity: {
+    weight: {
       type: String,
       required: true,
     },
@@ -31,13 +31,14 @@ const productSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    shipping: {
-      type: Boolean,
+    brand: {
+      type: String,
     },
   },
   {
     timestamps: true,
+    required: true,
   }
 );
 
-export default mongoose.model('Products', productSchema);
+module.exports = mongoose.model('Products', productSchema);

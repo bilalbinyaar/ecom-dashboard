@@ -1,11 +1,10 @@
-import ProductModel from '../schema/ProductModel.js';
-import fs from 'fs';
-import slugify from 'slugify';
+const ProductModel = require('../schema/ProductModel.js');
+const fs = require('fs');
+const slugify = require('slugify');
 
-export const createProductController = async (res, req) => {
+exports.createProductController = async (req, res) => {
   try {
-    const { name, description, slug, price, category, quantity, shipping } =
-      req.fields;
+    const { name, description, price, category, weight, brand } = req.fields;
     const { photo } = req.files;
 
     switch (true) {
@@ -17,8 +16,10 @@ export const createProductController = async (res, req) => {
         return res.status(500).send({ error: 'Price is required' });
       case !category:
         return res.status(500).send({ error: 'Category is required' });
-      case !quantity:
-        return res.status(500).send({ error: 'Quantity is required' });
+      case !weight:
+        return res.status(500).send({ error: 'Weight is required' });
+      case !brand:
+        return res.status(500).send({ error: 'Brand is required' });
       case !photo && photo.size > 1000000:
         return res
           .status(500)
@@ -45,7 +46,7 @@ export const createProductController = async (res, req) => {
   }
 };
 
-export const getProductController = async (res, req) => {
+exports.getProductController = async (req, res) => {
   try {
     const products = await ProductModel.find({})
       .populate('category')
@@ -68,7 +69,7 @@ export const getProductController = async (res, req) => {
   }
 };
 
-export const getSingleProductController = async (res, req) => {
+exports.getSingleProductController = async (req, res) => {
   try {
     const product = await ProductModel.findOne({ slug: req.params.slug })
       .select('-photo')
@@ -88,7 +89,7 @@ export const getSingleProductController = async (res, req) => {
   }
 };
 
-export const productPhotoController = async (req, res) => {
+exports.productPhotoController = async (req, res) => {
   try {
     const product = await ProductModel.findById(req.params.pid).select('photo');
     if (product.photo.data) {
@@ -105,7 +106,7 @@ export const productPhotoController = async (req, res) => {
   }
 };
 
-export const deleteProductController = async (req, res) => {
+exports.deleteProductController = async (req, res) => {
   try {
     await ProductModel.findByIdAndDelete(req.params.pid).select('-photo');
     res.status(200).send({
@@ -122,10 +123,9 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
-export const updateProductController = async (req, res) => {
+exports.updateProductController = async (req, res) => {
   try {
-    const { name, description, price, category, quantity, shipping } =
-      req.fields;
+    const { name, description, price, category, weight, brand } = req.fields;
     const { photo } = req.files;
 
     switch (true) {
@@ -137,8 +137,10 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: 'Price is required' });
       case !category:
         return res.status(500).send({ error: 'Category is required' });
-      case !quantity:
-        return res.status(500).send({ error: 'Quantity is required' });
+      case !brand:
+        return res.status(500).send({ error: 'Brand is required' });
+      case !weight:
+        return res.status(500).send({ error: 'Weight is required' });
       case !photo && photo.size > 1000000:
         return res
           .status(500)

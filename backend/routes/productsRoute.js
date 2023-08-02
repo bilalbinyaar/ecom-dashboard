@@ -1,13 +1,13 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   createProductController,
   getProductController,
   getSingleProductController,
   productPhotoController,
   deleteProductController,
   updateProductController,
-} from '../controllers/productController';
-import formidable from 'express-formidable';
+} = require('../controllers/productController');
+const formidable = require('express-formidable');
 
 const router = express.Router();
 
@@ -18,4 +18,4 @@ router.get('/product-photo/:pid', productPhotoController);
 router.delete('/product/:pid', deleteProductController);
 router.put('/update-product/:pid', formidable(), updateProductController);
 
-export default router;
+module.exports = router;

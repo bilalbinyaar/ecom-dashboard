@@ -47,6 +47,18 @@ input:focus {
   outline: 1px solid var(--secondary-color);
 }
 
+select {
+  width: 100%;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2px;
+  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+select:focus {
+  outline: 1px solid var(--secondary-color);
+}
+
 input[type='file'] {
   margin-bottom: 0.4rem;
   width: 100%;
@@ -260,6 +272,10 @@ input[type='file'] {
 }
 
 .inputs-for-modal input {
+  margin-bottom: 0.8rem;
+}
+
+.inputs-for-modal select {
   margin-bottom: 0.8rem;
 }
 
