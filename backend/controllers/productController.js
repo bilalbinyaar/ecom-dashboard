@@ -51,11 +51,11 @@ exports.getProductController = async (req, res) => {
     const products = await ProductModel.find({})
       .populate('category')
       .select('-photo')
-      .limit(12)
+      // .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
-      counTotal: products.length,
+      // counTotal: products.length,
       message: 'All Products',
       products,
     });

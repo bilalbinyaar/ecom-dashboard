@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
 import ProductModal from '../components/ProductModal';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
@@ -16,6 +16,7 @@ const AllProducts = () => {
   const [weight, setWeight] = useState('');
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -55,6 +56,22 @@ const AllProducts = () => {
       console.log(error);
     }
   };
+
+  // GET ALL THE PRODUCTS
+  const getAllProducts = async () => {
+    try {
+      const { data } = await axios.get(
+        'http://localhost:5000/api/product/get-product'
+      );
+      setProducts(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
   return (
     <div className="main-content">
       <SideBar />
@@ -94,16 +111,85 @@ const AllProducts = () => {
               />
             </div>
             <div className="body-content">
-              <div className="cat-listings-main">
-                <div className="cat-listings">
-                  <p>name</p>
-                  <p>image</p>
-                  <div className="edit-del">
-                    <AiFillEdit />
-                    <AiFillDelete />
+              {products?.map((p) => (
+                <table key={p._id} className="listings-table">
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Weight</th>
+                    <th>Price</th>
+                    <th>Edit/Delete</th>
+                  </tr>
+                  <tr x className="for-mb">
+                    <td>
+                      <img
+                        className="listed-products-img"
+                        src={`http://localhost:5000/api/product/product-photo/${p._id}`}
+                        alt={p.name}
+                      />
+                    </td>
+                    <td>{p.name}</td>
+                    <td>{p.description}</td>
+                    <td>{p.category.name}</td>
+                    <td>{p.brand}</td>
+                    <td>{p.weight}</td>
+                    <td>{p.price}</td>
+                    <td>
+                      <div className="edit-del">
+                        <AiFillEdit />
+                        <AiFillDelete />
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              ))}
+
+              {/* <div className="cat-listings-main">
+                {products?.map((p) => (
+                  <div className="prods-listings" key={p._id}>
+                    <div className="listed-products-entries">
+                      <img
+                        className="listed-products-img"
+                        src={`http://localhost:5000/api/product/product-photo/${p._id}`}
+                        alt={p.name}
+                      />
+                    </div>
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Name</p>
+                      <p>{p.name}</p>
+                    </div>
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Description</p>
+                      <p>{p.description}</p>
+                    </div>
+
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Category</p>
+                      <p>{p.category.name}</p>
+                    </div>
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Brand</p>
+                      <p>{p.brand}</p>
+                    </div>
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Weight</p>
+                      <p>{p.weight}</p>
+                    </div>
+                    <div className="listed-products-entries">
+                      <p className="fw-listed-products">Price</p>
+                      <p>{p.price}</p>
+                    </div>
+
+                    <div className="edit-del">
+                      <AiFillEdit />
+                      <AiFillDelete />
+                    </div>
                   </div>
-                </div>
-              </div>
+                ))}
+              </div> */}
             </div>
           </div>
         </div>
