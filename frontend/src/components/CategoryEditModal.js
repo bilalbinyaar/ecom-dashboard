@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-const CategoryEditModal = ({ isOpen, onClose, handleUpdate, updatedName, setValue }) => {
+const CategoryEditModal = ({
+  isOpen,
+  onClose,
+  handleUpdate,
+  updatedName,
+  setValue,
+}) => {
   if (!isOpen) return null;
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-         <h2>Add New Category</h2>
+        <h2>Edit Category</h2>
         <div className="inputs-for-modal">
           <input
             type="text"
@@ -20,7 +26,7 @@ const CategoryEditModal = ({ isOpen, onClose, handleUpdate, updatedName, setValu
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CategoryEditModal
+export default CategoryEditModal;

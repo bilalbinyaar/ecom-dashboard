@@ -3,9 +3,12 @@ import SideBar from '../components/SideBar';
 import ProductModal from '../components/ProductModal';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import axios from 'axios';
+import ProductEditModal from '../components/ProductEditModal';
 
 const AllProducts = () => {
+  const [selected, setSelected] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [photo, setPhoto] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -17,6 +20,13 @@ const AllProducts = () => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
   const [products, setProducts] = useState([]);
+  const [updatedName, setUpdatedName] = useState('');
+  const [updatedDescription, setUpdatedDescription] = useState('');
+  const [updatedPrice, setUpdatedPrice] = useState('');
+  const [updatedBrand, setUpdatedBrand] = useState('');
+  const [updatedWeight, setUpdatedWeight] = useState('');
+  const [updatedPhoto, setUpdatedPhoto] = useState('');
+  const [updatedCategory, setUpdatedCategory] = useState('');
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -24,6 +34,13 @@ const AllProducts = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
+  };
+
+  const handleOpenEditModal = () => {
+    setEditModalOpen(true);
+  };
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
   };
 
   //CREATING PRODUCTS
@@ -72,6 +89,77 @@ const AllProducts = () => {
     getAllProducts();
   }, []);
 
+  // UPDATE SINGLE PRODUCT
+  // const handleUpdateProduct = async (e) => {
+  //   e.preventDefault();
+  //   const productData = new FormData();
+  //   productData.append('name', name);
+  //   productData.append('description', description);
+  //   productData.append('price', price);
+  //   productData.append('brand', brand);
+  //   productData.append('weight', weight);
+  //   productData.append('photo', photo);
+  //   productData.append('category', category);
+  //   try {
+  //     const { data } = await axios.put(
+  //       `http://localhost:5000/api/product/update-product/${selected._id}`,
+  //       {
+  //         name: updatedName,
+  //         description: updatedDescription,
+  //         photo: updatedPhoto,
+  //         brand: updatedBrand,
+  //         category: updatedCategory,
+  //         price: updatedPrice,
+  //       },
+  //       productData
+  //     );
+  //     if (data.success) {
+  //       setSelected(null);
+  //       setUpdatedName('');
+  //       setUpdatedDescription('');
+  //       setUpdatedBrand('');
+  //       setUpdatedWeight('');
+  //       setUpdatedPrice('');
+  //       handleCloseEditModal();
+  //       getAllProducts();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+    console.log('Name', updatedName);
+    try {
+      const { data } = await axios.put(
+        `http://localhost:5000/api/product/update-product/${selected._id}`,
+        {
+          name: updatedName,
+          description: updatedDescription,
+          photo: updatedPhoto,
+          brand: updatedBrand,
+          category: updatedCategory,
+          price: updatedPrice,
+        }
+      );
+      console.log(data);
+      if (data.success) {
+        setSelected(null);
+        setUpdatedName('');
+        setUpdatedDescription('');
+        setUpdatedBrand('');
+        setUpdatedWeight('');
+        setUpdatedPrice('');
+        handleCloseEditModal();
+        getAllProducts();
+        console.log(data, 'hanndle update');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="main-content">
       <SideBar />
@@ -113,84 +201,75 @@ const AllProducts = () => {
             <div className="body-content">
               {products?.map((p) => (
                 <table key={p._id} className="listings-table">
-                  <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Brand</th>
-                    <th>Weight</th>
-                    <th>Price</th>
-                    <th>Edit/Delete</th>
-                  </tr>
-                  <tr x className="for-mb">
-                    <td>
-                      <img
-                        className="listed-products-img"
-                        src={`http://localhost:5000/api/product/product-photo/${p._id}`}
-                        alt={p.name}
-                      />
-                    </td>
-                    <td>{p.name}</td>
-                    <td>{p.description}</td>
-                    <td>{p.category.name}</td>
-                    <td>{p.brand}</td>
-                    <td>{p.weight}</td>
-                    <td>{p.price}</td>
-                    <td>
-                      <div className="edit-del">
-                        <AiFillEdit />
-                        <AiFillDelete />
-                      </div>
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Brand</th>
+                      <th>Weight</th>
+                      <th>Price</th>
+                      <th>Edit/Delete</th>
+                    </tr>
+                    <tr className="for-mb">
+                      <td>
+                        <img
+                          className="listed-products-img"
+                          src={`http://localhost:5000/api/product/product-photo/${p._id}`}
+                          alt={p.name}
+                        />
+                      </td>
+                      <td>{p.name}</td>
+                      <td>{p.description}</td>
+                      <td>{p.category.name}</td>
+                      <td>{p.brand}</td>
+                      <td>{p.weight}</td>
+                      <td>{p.price}</td>
+                      <td>
+                        <div className="edit-del edit-del-prods">
+                          <AiFillEdit
+                            onClick={() => {
+                              handleOpenEditModal();
+                              setSelected(p);
+                              setUpdatedName(p.name);
+                              setUpdatedDescription(p.description);
+                              setUpdatedCategory(p.category._id);
+                              setUpdatedBrand(p.brand);
+                              setUpdatedWeight(p.weight);
+                              setUpdatedPrice(p.price);
+                              setUpdatedPhoto(
+                                `http://localhost:5000/api/product/product-photo/${p._id}`
+                              );
+                            }}
+                          />
+                          <AiFillDelete />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               ))}
-
-              {/* <div className="cat-listings-main">
-                {products?.map((p) => (
-                  <div className="prods-listings" key={p._id}>
-                    <div className="listed-products-entries">
-                      <img
-                        className="listed-products-img"
-                        src={`http://localhost:5000/api/product/product-photo/${p._id}`}
-                        alt={p.name}
-                      />
-                    </div>
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Name</p>
-                      <p>{p.name}</p>
-                    </div>
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Description</p>
-                      <p>{p.description}</p>
-                    </div>
-
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Category</p>
-                      <p>{p.category.name}</p>
-                    </div>
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Brand</p>
-                      <p>{p.brand}</p>
-                    </div>
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Weight</p>
-                      <p>{p.weight}</p>
-                    </div>
-                    <div className="listed-products-entries">
-                      <p className="fw-listed-products">Price</p>
-                      <p>{p.price}</p>
-                    </div>
-
-                    <div className="edit-del">
-                      <AiFillEdit />
-                      <AiFillDelete />
-                    </div>
-                  </div>
-                ))}
-              </div> */}
             </div>
+            <ProductEditModal
+              isOpen={isEditModalOpen}
+              onClose={handleCloseEditModal}
+              handleUpdateProduct={handleUpdateProduct}
+              updatedName={updatedName}
+              setValue={setUpdatedName}
+              updatedDescription={updatedDescription}
+              setUpdatedDescription={setUpdatedDescription}
+              updatedPrice={updatedPrice}
+              setUpdatedPrice={setUpdatedPrice}
+              updatedBrand={updatedBrand}
+              setUpdatedBrand={setUpdatedBrand}
+              updatedWeight={updatedWeight}
+              setUpdatedWeight={setUpdatedWeight}
+              setUpdatedPhoto={setUpdatedPhoto}
+              updatedPhoto={updatedPhoto}
+              setUpdatedCategory={setUpdatedCategory}
+              updatedCategory={updatedCategory}
+            />
           </div>
         </div>
       </div>

@@ -340,6 +340,10 @@ input[type='file'] {
   justify-content: center;
 }
 
+.listings-table tbody {
+  width: 100%;
+}
+
 .listings-table th {
   width: 100%;
 }
@@ -358,4 +362,9 @@ input[type='file'] {
 
 .for-mb {
   margin-top: 0.8rem;
+}
+
+.edit-del-prods svg {
+  margin-right: 2rem;
+  margin-left: 0;
 }
