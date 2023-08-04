@@ -125,9 +125,6 @@ exports.deleteProductController = async (req, res) => {
 
 exports.updateProductController = async (req, res) => {
   try {
-    console.log('Received fields:', req.fields);
-    console.log('Received files:', req.files);
-
     const { name, description, price, category, weight, brand } = req.fields;
     const { photo } = req.files;
 
@@ -154,7 +151,6 @@ exports.updateProductController = async (req, res) => {
       { ...req.fields, slug: slugify(name) },
       { new: true }
     );
-    console.log('Updated product:', products);
     if (!products) {
       return res.status(404).send({ error: 'Product not found' });
     }
@@ -162,15 +158,12 @@ exports.updateProductController = async (req, res) => {
       products.photo.data = fs.readFileSync(photo.path);
       products.photo.contentType = photo.contentType;
     }
-    console.log('Product before save:', products);
     await products.save();
-    console.log('Product after save:', products);
     res.status(201).send({
       success: true,
       message: 'Product Updated Successfully',
       products,
     });
-    console.log(products, 'after save');
   } catch (error) {
     console.log(error);
     res.status(500).send({

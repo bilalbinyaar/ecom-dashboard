@@ -8,6 +8,7 @@ import Pasta from './screens/Pasta';
 import Wheat from './screens/Wheat';
 import WebComponents from './screens/WebComponents';
 import Contacts from './screens/Contact';
+import UpdateProduct from './screens/products/UpdateProduct';
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -55,6 +56,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/products" element={<AllProducts />} />
+      <Route path="/products/:slug" element={<UpdateProduct />} />
       <Route path="/salt" element={<Salt />} />
       <Route path="/pasta" element={<Pasta />} />
       <Route path="/wheat" element={<Wheat />} />
