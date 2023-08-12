@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
 
 const Wheat = () => {
+  const [wheatFlourProducts, setWheatFlourProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch products with the category of "Wheat Flour"
+    fetch('http://localhost:5000/api/product/wheat-flour-products')
+      .then((response) => response.json())
+      .then((data) => setWheatFlourProducts(data.products))
+      .catch((error) =>
+        console.error('Error fetching wheat flour products:', error)
+      );
+  }, []);
   return (
     <div className="main-content">
       <SideBar />
@@ -9,6 +20,76 @@ const Wheat = () => {
       <div className="content-wrapper">
         <div className="section-title">
           <h2>Wheat Products</h2>
+        </div>
+
+        <div className="content-inner">
+          <div className="categories-content">
+            <div className="upper-content">
+              <h4>These are the all listed wheat products</h4>
+              <button hidden>Add New</button>
+            </div>
+
+            <div className="body-content">
+              <div className="product-card-listings-main">
+                {wheatFlourProducts?.map((product) => (
+                  <div
+                    className="product-card-listings-inner"
+                    key={product._id}
+                  >
+                    <div className="product-card-listings">
+                      <div className="product-lists-img-div">
+                        <img
+                          className="listed-products-img"
+                          src={`http://localhost:5000/api/product/product-photo/${product._id}`}
+                          alt={product.name}
+                        />
+                      </div>
+                      <div className="product-det-entry">
+                        <p>
+                          <strong>Name: </strong>
+                          <br />
+                          {product.name}
+                        </p>
+                      </div>
+                      {/* <div className="product-det-entry">
+                        <strong>Category: </strong>
+                        <br />
+                        <p> {product.category.name}</p>
+                      </div> */}
+                      <div className="product-det-entry">
+                        <strong>Brand: </strong>
+                        <br />
+                        <p>{product.brand}</p>
+                      </div>
+                      <div className="product-det-entry">
+                        <strong>Weight: </strong>
+                        <br />
+                        <p>{product.weight}</p>
+                      </div>
+                      <div className="product-det-entry">
+                        <strong>Price: </strong>
+                        <br />
+                        <p> {product.price}</p>
+                      </div>
+                      <div className="product-det-entry">
+                        <strong>Description: </strong>
+                        <br />
+                        <p>{product.description} </p>
+                      </div>
+                      {/* <div className="edit-del edit-del-prods">
+                        <Link
+                          to={`/products/${p.slug}`}
+                          className="product-link"
+                        >
+                          <button>Edit</button>
+                        </Link>
+                      </div> */}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

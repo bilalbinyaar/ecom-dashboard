@@ -1,6 +1,7 @@
 const ProductModel = require('../schema/ProductModel.js');
 const fs = require('fs');
 const slugify = require('slugify');
+const CategoryController = require('../controllers/categoryController.js');
 
 exports.createProductController = async (req, res) => {
   try {
@@ -170,6 +171,77 @@ exports.updateProductController = async (req, res) => {
       success: false,
       error: error.message,
       message: 'Error Updating Product',
+    });
+  }
+};
+
+// NEW CODE FOR CATEGORY PRODUCTS FETCHING
+exports.getSaltProducts = async (req, res) => {
+  try {
+    const saltsCategoryId = await CategoryController.getCategoryIdByName(
+      'Salts'
+    );
+    const saltProducts = await ProductModel.find({ category: saltsCategoryId });
+
+    res.status(200).send({
+      success: true,
+      message: 'Products with the category of "Salts"',
+      products: saltProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: 'Error fetching products with the category of "Salts"',
+    });
+  }
+};
+
+exports.getPastaProducts = async (req, res) => {
+  try {
+    const pastaCategoryId = await CategoryController.getCategoryIdByName(
+      'Pasta'
+    );
+    const pastaProducts = await ProductModel.find({
+      category: pastaCategoryId,
+    });
+
+    res.status(200).send({
+      success: true,
+      message: 'Products with the category of "Pasta"',
+      products: pastaProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: 'Error fetching products with the category of "Pasta"',
+    });
+  }
+};
+
+exports.getWheatFlourProducts = async (req, res) => {
+  try {
+    const wheatFlourCategoryId = await CategoryController.getCategoryIdByName(
+      'Wheat Flour'
+    );
+    const wheatFlourProducts = await ProductModel.find({
+      category: wheatFlourCategoryId,
+    }).populate('category'); // Populate the category field
+
+    res.status(200).send({
+      success: true,
+      message: 'Products with the category of "Wheat Flour"',
+      products: wheatFlourProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: 'Error fetching products with the category of "Wheat Flour"',
     });
   }
 };
