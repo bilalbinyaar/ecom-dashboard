@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
+import { Link } from 'react-router-dom';
 
 const Salt = () => {
   const [saltProducts, setSaltProducts] = useState([]);
@@ -17,13 +18,7 @@ const Salt = () => {
         <div className="section-title">
           <h2>Salt Products</h2>
         </div>
-        {/* <div>
-          <ul>
-            {saltProducts.map((product) => (
-              <li key={product._id}>{product.name}</li>
-            ))}
-          </ul>
-        </div> */}
+
         <div className="content-inner">
           <div className="categories-content">
             <div className="upper-content">
@@ -53,11 +48,11 @@ const Salt = () => {
                           {product.name}
                         </p>
                       </div>
-                      {/* <div className="product-det-entry">
+                      <div className="product-det-entry">
                         <strong>Category: </strong>
                         <br />
                         <p> {product.category.name}</p>
-                      </div> */}
+                      </div>
                       <div className="product-det-entry">
                         <strong>Brand: </strong>
                         <br />
@@ -78,14 +73,14 @@ const Salt = () => {
                         <br />
                         <p>{product.description} </p>
                       </div>
-                      {/* <div className="edit-del edit-del-prods">
+                      <div className="edit-del edit-del-prods">
                         <Link
-                          to={`/products/${p.slug}`}
+                          to={`/salt/${product.slug}`}
                           className="product-link"
                         >
                           <button>Edit</button>
                         </Link>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 ))}

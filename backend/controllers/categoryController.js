@@ -124,11 +124,27 @@ exports.deleteCategoryController = async (req, res) => {
 };
 
 // NEW CODE FOR CATEGORY PRODUCTS FETCHING
+// exports.getCategoryIdByName = async (name) => {
+//   try {
+//     const category = await CategoryModel.findOne({ name });
+//     return category._id;
+//   } catch (error) {
+//     throw new Error('Error fetching category ID');
+//   }
+// };
+
 exports.getCategoryIdByName = async (name) => {
+  console.log('Fetching category ID for:', name);
   try {
     const category = await CategoryModel.findOne({ name });
+    console.log('Fetched category:', category);
+    if (!category) {
+      console.log('Category not found:', name);
+      return null;
+    }
     return category._id;
   } catch (error) {
-    throw new Error('Error fetching category ID');
+    console.log('Error fetching category ID:', error);
+    throw error;
   }
 };

@@ -1,7 +1,7 @@
 const ProductModel = require('../schema/ProductModel.js');
 const fs = require('fs');
 const slugify = require('slugify');
-const CategoryController = require('../controllers/categoryController.js');
+const CategoryController = require('./categoryController.js');
 
 exports.createProductController = async (req, res) => {
   try {
@@ -181,7 +181,9 @@ exports.getSaltProducts = async (req, res) => {
     const saltsCategoryId = await CategoryController.getCategoryIdByName(
       'Salts'
     );
-    const saltProducts = await ProductModel.find({ category: saltsCategoryId });
+    const saltProducts = await ProductModel.find({
+      category: saltsCategoryId,
+    }).populate('category');
 
     res.status(200).send({
       success: true,
@@ -205,7 +207,7 @@ exports.getPastaProducts = async (req, res) => {
     );
     const pastaProducts = await ProductModel.find({
       category: pastaCategoryId,
-    });
+    }).populate('category');
 
     res.status(200).send({
       success: true,

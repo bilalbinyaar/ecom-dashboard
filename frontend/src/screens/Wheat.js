@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SideBar from '../components/SideBar';
+import { Link } from 'react-router-dom';
 
 const Wheat = () => {
   const [wheatFlourProducts, setWheatFlourProducts] = useState([]);
@@ -51,11 +52,11 @@ const Wheat = () => {
                           {product.name}
                         </p>
                       </div>
-                      {/* <div className="product-det-entry">
+                      <div className="product-det-entry">
                         <strong>Category: </strong>
                         <br />
                         <p> {product.category.name}</p>
-                      </div> */}
+                      </div>
                       <div className="product-det-entry">
                         <strong>Brand: </strong>
                         <br />
@@ -76,14 +77,14 @@ const Wheat = () => {
                         <br />
                         <p>{product.description} </p>
                       </div>
-                      {/* <div className="edit-del edit-del-prods">
+                      <div className="edit-del edit-del-prods">
                         <Link
-                          to={`/products/${p.slug}`}
+                          to={`/wheat/${product.slug}`}
                           className="product-link"
                         >
                           <button>Edit</button>
                         </Link>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 ))}
