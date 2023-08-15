@@ -8,7 +8,8 @@
 }
 
 :root {
-  --primary-color: #206a5d;
+  /* --primary-color: #206a5d; */
+  --primary-color: #00a990;
   --secondary-color: #1b1c25;
   --light-color: #ebecf1;
 }
@@ -438,4 +439,11 @@ input[type='file'] {
 
 .replace-btn {
   width: 30% !important;
+}
+
+.contact-item {
+  padding: 1rem;
+  background-color: var(--light-color);
+  margin-right: 0.6rem;
+  border-radius: 8px;
 }
