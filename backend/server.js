@@ -5,6 +5,9 @@ const express = require('express');
 const categoryRoute = require('./routes/categoryRoute.js');
 const productsRoute = require('./routes/productsRoute.js');
 const saltFeatureImageRoute = require('./routes/saltFeatureImageRoute.js');
+const pastaFeatureImageRoute = require('./routes/pastaFeatureImageRoute.js');
+const wheatFeatureImageRoute = require('./routes/wheatFeatureImageRoute.js');
+
 const cors = require('cors');
 const app = express();
 app.use(cors());
@@ -18,6 +21,8 @@ connectDB();
 app.use('/api/category', categoryRoute);
 app.use('/api/product', productsRoute);
 app.use('/api/salt-feature-image', saltFeatureImageRoute);
+app.use('/api/pasta-feature-image', pastaFeatureImageRoute);
+app.use('/api/wheat-feature-image', wheatFeatureImageRoute);
 app.listen(port, hostname, () => {
   console.log(`server running at http://${hostname}:${port}/`);
 });
