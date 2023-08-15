@@ -384,7 +384,7 @@ input[type='file'] {
   width: 245px;
   background-color: #ebecf1;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .product-lists-img-div {
@@ -406,4 +406,30 @@ input[type='file'] {
 
 .product-link button {
   width: 50%;
+}
+
+.single-component {
+  padding: 2rem;
+  background-color: var(--light-color);
+  width: fit-content;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.single-component h4 {
+  margin-bottom: 1rem;
+}
+
+.single-component img {
+  width: 200px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.replace-btn {
+  width: 30% !important;
 }

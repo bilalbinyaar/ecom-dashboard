@@ -4,6 +4,7 @@ const port = 5000;
 const express = require('express');
 const categoryRoute = require('./routes/categoryRoute.js');
 const productsRoute = require('./routes/productsRoute.js');
+const saltFeatureImageRoute = require('./routes/saltFeatureImageRoute.js');
 const cors = require('cors');
 const app = express();
 app.use(cors());
@@ -16,7 +17,7 @@ connectDB();
 //Routes
 app.use('/api/category', categoryRoute);
 app.use('/api/product', productsRoute);
-
+app.use('/api/salt-feature-image', saltFeatureImageRoute);
 app.listen(port, hostname, () => {
   console.log(`server running at http://${hostname}:${port}/`);
 });
